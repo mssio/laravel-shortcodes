@@ -4,6 +4,12 @@ use Illuminate\Support\Str;
 
 class ShortcodeCompiler
 {
+    protected $_viewData;
+    public function viewData ($viewData)
+    {
+        $this->_viewData = $viewData;
+        return $this;
+    }
 
     /**
      * Enabled state
@@ -140,13 +146,15 @@ class ShortcodeCompiler
         // Compile the shortcode
         $compiled = $this->compileShortcode($matches);
         $name = $compiled->getName();
+        $viewData = $this->_viewData;
 
         // Render the shortcode through the callback
         return call_user_func_array($this->getCallback($name), [
             $compiled,
             $compiled->getContent(),
             $this,
-            $name
+            $name,
+            $viewData
         ]);
     }
 

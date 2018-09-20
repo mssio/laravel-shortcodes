@@ -77,7 +77,7 @@ class View extends IlluminateView implements ArrayAccess, Renderable
             $contents = $this->shortcode->strip($contents);
         } else {
             // compile the shortcodes
-            $contents = $this->shortcode->compile($contents);
+            $contents = $this->shortcode->viewData($this->getData())->compile($contents);
         }
         // Once we've finished rendering the view, we'll decrement the render count
         // so that each sections get flushed out next time a view is created and
